@@ -13,7 +13,7 @@ export const addTodoIdAC = (payload) => ({ type: ADD_TODO_ID, payload });
 export default function stateReducer(state, { type, payload }) {
   switch (type) {
     case ADD_TODO:
-      return { ...state, todos: [...state.todos, payload] };
+      return { ...state, todos: [...state.todos, {id: Date.now().toString(), title: payload}] };
     case CHANGE_TODO:
       return {
         ...state,

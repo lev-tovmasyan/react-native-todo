@@ -1,12 +1,16 @@
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { useStore } from "../context/StateProvider";
 import TodoItem from "./TodoItem";
 
-const TodoList = ({ todos, removeTodo, setTodoId }) => {
+const TodoList = () => {
+
+  const {state, removeTodo, setTodoId} = useStore()
+
   let content = (
     <FlatList
       style={styles.todoList}
-      data={todos}
+      data={state.todos}
       renderItem={({ item, index }) => (
         <TodoItem
           index={index}
@@ -19,7 +23,7 @@ const TodoList = ({ todos, removeTodo, setTodoId }) => {
     />
   );
 
-  if (!todos.length) {
+  if (!state.todos.length) {
     content = (
       <View style={styles.noItemWrap}>
         <Text style={styles.noTodoText}>No Todos</Text>

@@ -15,6 +15,11 @@ const EditModal = ({ isModalVisible, setIsMobileVisible, changeTodo, index, valu
     }
   } 
 
+  const cancelHandler = () => {
+    setIsMobileVisible(false)
+    setInputValue(value)
+  }
+
   return (
     <Modal 
     animationType='slide'
@@ -31,7 +36,7 @@ const EditModal = ({ isModalVisible, setIsMobileVisible, changeTodo, index, valu
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.backButton}
-              onPress={() => setIsMobileVisible(false)}
+              onPress={cancelHandler}
             >
               <Text style={styles.textColor}>Cancel</Text>
             </TouchableOpacity>

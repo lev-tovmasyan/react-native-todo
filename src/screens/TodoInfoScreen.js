@@ -5,11 +5,10 @@ import EditModal from "../components/EditModal";
 import { THEME } from "../theme";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { useStore } from "../context/StateProvider";
-import {changeTodoAC} from '../context/stateReducer'
 
-const TodoInfoScreen = ({removeTodo, setTodoId}) => {
+const TodoInfoScreen = () => {
 	const [isModalVisible, setIsMobileVisible] = useState(false);
-	const {state, dispatch} = useStore()
+	const {state, removeTodo, setTodoId, changeTodo} = useStore()
 	const todo = state.todos.find((item) => item.id === state.todoId)
 
 	return (
@@ -52,13 +51,6 @@ const TodoInfoScreen = ({removeTodo, setTodoId}) => {
 			</View>
 		</View>
 	);
-
-
-
-	function changeTodo(id, value) {
-    dispatch(changeTodoAC({id, value}))
-  };
-
 };
 
 export default TodoInfoScreen;

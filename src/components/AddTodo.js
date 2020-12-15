@@ -9,10 +9,12 @@ import {
 } from "react-native";
 import { THEME } from "../theme";
 import { AntDesign } from '@expo/vector-icons'
+import { useStore } from "../context/StateProvider";
 
-const AddTodo = ({ addTodo }) => {
+const AddTodo = () => {
 
   const [inputValue, setInputValue] = useState("");
+  const { addTodo } = useStore()
 
   const pressHandler = () => {
     if(inputValue.trim()){
