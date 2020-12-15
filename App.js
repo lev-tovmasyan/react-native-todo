@@ -1,59 +1,32 @@
-import React from "react";
-import { Alert, View, StyleSheet } from "react-native";
-import Navbar from "./src/components/Navbar";
-import { useStore } from "./src/context/StateProvider";
-import { addTodoIdAC, removeTodoAC } from "./src/context/stateReducer";
-import MainScreen from "./src/screens/MainScreen";
-import TodoInfoScreen from "./src/screens/TodoInfoScreen";
+import React, { useState } from "react";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+import StateProvider from "./src/context/StateProvider";
+import Main from "./Main";
 
-const App = () => {
-	const { state, dispatch } = useStore();
-	
-  return (
-    <View style={styles.container}>
-      <Navbar />
-      {!state.todoId ? (
-        <MainScreen removeTodo={removeTodo} setTodoId={setTodoId} />
-      ) : (
-        <TodoInfoScreen removeTodo={removeTodo} setTodoId={setTodoId} />
-      )}
-    </View>
-  );
+async function loadApp() {
+  await Font.loadAsync({
+    "roboto-regular": require("./assets/fonts/Roboto-Regular.ttf"),
+    "roboto-bold": require("./assets/fonts/Roboto-Bold.ttf"),
+  });
+}
 
+export default function App() {
+  const [isReady, setIsReady] = useState(false);
 
-
-
-  function setTodoId(value) {
-    dispatch(addTodoIdAC(value));
-  }
-
-  function removeTodo(id) {
-    Alert.alert(
-      "Remove Title",
-      "are you sure?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Remove",
-          style: "destructive",
-          onPress: () => {
-            state.todoId && setTodoId(null);
-            dispatch(removeTodoAC(id));
-          },
-        },
-      ],
-      { cancelable: false }
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={loadApp}
+        onError={(err) => console.log(err)}
+        onFinish={() => setIsReady(true)}
+      />
     );
   }
-};
 
-export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+  return (
+    <StateProvider>
+      <Main />
+    </StateProvider>
+  );
+}
