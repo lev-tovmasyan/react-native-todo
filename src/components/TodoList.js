@@ -1,11 +1,13 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useStore } from "../context/StateProvider";
+import { THEME } from "../theme";
+import AppLoader from "./AppLoader";
 import TodoItem from "./TodoItem";
 
 const TodoList = () => {
 
-  const {state, removeTodo, setTodoId} = useStore()
+  const {state, removeTodo, setTodoId } = useStore()
 
   let content = (
     <FlatList
@@ -33,7 +35,7 @@ const TodoList = () => {
   }
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       {content}
     </View>
   );
@@ -59,5 +61,5 @@ const styles = StyleSheet.create({
     height: 300,
     marginTop: 40,
     resizeMode: 'contain',
-  }
+  },
 });

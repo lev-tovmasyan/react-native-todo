@@ -6,9 +6,9 @@ const EditModal = ({ isModalVisible, setIsMobileVisible, changeTodo, index, valu
 
   const [inputValue, setInputValue] = useState(value)
 
-  const changeHandler = () => {
+  const changeHandler = async () => {
     if(inputValue.trim()){
-      changeTodo(index, inputValue)
+      await changeTodo(index, inputValue)
       setIsMobileVisible(false)
     } else {
       Alert.alert('Todo Title Cannot Be Empty!')
