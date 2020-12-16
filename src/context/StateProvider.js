@@ -25,8 +25,15 @@ function StateProvider({ children }) {
   const setTodoId = (value) => dispatch(addTodoIdAC(value));
   
   const addTodo = async (title) => {
-    const {name} = await instance.post('todos.json', JSON.stringify({ title })).then(res => res.data).catch()
-    dispatch(addTodoAC({id: name, title}))
+    toggleError(null)
+    try {
+      const {name} = await instance.post('todos.json', JSON.stringify({ title })).then(res => res.data).catch()
+      dispatch(addTodoAC({id: name, title}))
+    } catch (error) {
+      toggleError('Something Went Wrong...')
+      console.log('addTodo Error', err)
+    }
+
   };
 
   const fetchTodos = async () => {
@@ -39,7 +46,7 @@ function StateProvider({ children }) {
 
     } catch (err) {
       toggleError('Something Went Wrong...')
-      console.log('Fetch Error', err)
+      console.log('fetchTodos Error', err)
 
     } finally {
       toggleLoading(false)
@@ -53,7 +60,7 @@ function StateProvider({ children }) {
        dispatch(changeTodoAC({ id, title }))
     } catch (err) {
       toggleError('Something Went Wrong...')
-      console.log('Update Error', err)
+      console.log('changeTodo Error', err)
     }
 
     };
